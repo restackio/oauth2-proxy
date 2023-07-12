@@ -32,15 +32,15 @@ ARG BUILDPLATFORM
 # Set the cross compilation arguments based on the TARGETPLATFORM which is
 #  automatically set by the docker engine.
 RUN case ${TARGETPLATFORM} in \
-         "linux/amd64")  GOARCH=amd64  ;; \
-         # arm64 and arm64v8 are equivilant in go and do not require a goarm
-         # https://github.com/golang/go/wiki/GoArm
-         "linux/arm64" | "linux/arm/v8")  GOARCH=arm64  ;; \
-         "linux/ppc64le")  GOARCH=ppc64le  ;; \
-         "linux/arm/v6") GOARCH=arm GOARM=6  ;; \
-    esac && \
-    printf "Building OAuth2 Proxy for arch ${GOARCH}\n" && \
-    GOARCH=${GOARCH} VERSION=${VERSION} make build && touch jwt_signing_key.pem
+  "linux/amd64")  GOARCH=amd64  ;; \
+  # arm64 and arm64v8 are equivilant in go and do not require a goarm
+  # https://github.com/golang/go/wiki/GoArm
+  "linux/arm64" | "linux/arm/v8")  GOARCH=arm64  ;; \
+  "linux/ppc64le")  GOARCH=ppc64le  ;; \
+  "linux/arm/v6") GOARCH=arm GOARM=6  ;; \
+  esac && \
+  printf "Building OAuth2 Proxy for arch ${GOARCH}\n" && \
+  GOARCH=${GOARCH} VERSION=${VERSION} make build && touch jwt_signing_key.pem
 
 # Copy binary to alpine
 FROM ${RUNTIME_IMAGE}
@@ -52,3 +52,7 @@ COPY --from=builder /go/src/github.com/oauth2-proxy/oauth2-proxy/jwt_signing_key
 USER 65532:65532
 
 ENTRYPOINT ["/bin/oauth2-proxy"]
+
+EXPOSE 4180 8080
+
+CMD [ "--upstream=http://0.0.0.0:8080/", "--http-address=0.0.0.0:4180" ]
