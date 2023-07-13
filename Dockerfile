@@ -53,6 +53,6 @@ USER 65532:65532
 
 ENTRYPOINT ["/bin/oauth2-proxy"]
 
-EXPOSE 4180 8080
+EXPOSE 4180
 
-CMD [ "--upstream=http://0.0.0.0:8080/", "--http-address=0.0.0.0:4180" ]
+CMD [ "--http-address=0.0.0.0:4180" ]
