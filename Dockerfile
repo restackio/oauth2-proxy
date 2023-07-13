@@ -54,3 +54,5 @@ USER 65532:65532
 ENTRYPOINT ["/bin/oauth2-proxy"]
 
 EXPOSE 4180
+
+CMD [ "--http-address=0.0.0.0:4180" ]
