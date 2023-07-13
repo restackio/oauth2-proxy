@@ -52,3 +52,5 @@ COPY --from=builder /go/src/github.com/oauth2-proxy/oauth2-proxy/jwt_signing_key
 USER 65532:65532
 
 ENTRYPOINT ["/bin/oauth2-proxy"]
+
+EXPOSE 4180
