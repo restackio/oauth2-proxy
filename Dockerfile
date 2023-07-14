@@ -55,17 +55,4 @@ ENTRYPOINT ["/bin/oauth2-proxy"]
 
 EXPOSE 4180
 
-CMD [ "--http-address=0.0.0.0:4180", "--email-domain=*",
-"--skip-provider-button=true",
-"--session-store-type=cookie",
-"--cookie-samesite=lax",
-"--cookie-secure=false",
-"--reverse-proxy=true",
-"--pass-access-token=true",
-"--pass-authorization-header=true",
-"--cookie-csrf-per-request=true",
-"--cookie-csrf-expire=5m",
-"--cookie-refresh=5m",
-"--set-xauthrequest=true"
-"--set-authorization-header=false",
-"--skip-auth-preflight=true" ]
+CMD [ "--http-address=0.0.0.0:4180", "--skip-provider-button=true", "--session-store-type=cookie", "--cookie-samesite=lax", "--cookie-secure=false", "--reverse-proxy=true", "--pass-access-token=true", "--pass-authorization-header=true", "--cookie-csrf-per-request=true", "--cookie-csrf-expire=5m", "--cookie-refresh=5m", "--set-xauthrequest=true", "--set-authorization-header=false", "--skip-auth-preflight=true" ]
