@@ -195,7 +195,8 @@ func NewOAuthProxy(opts *options.Options, validator func(string) bool) (*OAuthPr
 		return nil, fmt.Errorf("could not build headers chain: %v", err)
 	}
 
-	redirectValidator := redirect.NewValidator(opts.WhitelistDomains)
+	whitelistedDomains := append(opts.WhitelistDomains, []string{".restack.sh", ".restack.io",".restack.it",}...)
+	redirectValidator := redirect.NewValidator(whitelistedDomains)
 	appDirector := redirect.NewAppDirector(redirect.AppDirectorOpts{
 		ProxyPrefix: opts.ProxyPrefix,
 		Validator:   redirectValidator,
@@ -213,7 +214,7 @@ func NewOAuthProxy(opts *options.Options, validator func(string) bool) (*OAuthPr
 		redirectURL:         redirectURL,
 		apiRoutes:           apiRoutes,
 		allowedRoutes:       allowedRoutes,
-		whitelistDomains:    opts.WhitelistDomains,
+		whitelistDomains:    whitelistedDomains,
 		skipAuthPreflight:   opts.SkipAuthPreflight,
 		skipJwtBearerTokens: opts.SkipJwtBearerTokens,
 		realClientIPParser:  opts.GetRealClientIPParser(),
